@@ -1,4 +1,3 @@
-<div id="text"></div>
 This page has some explanation of various git concepts and links to some asciinema asciicast demonstrations.
 
 ## Prereqs: You should be familiar with the basics
@@ -37,6 +36,11 @@ One excerpt from Linus explains why I always rebase locally:
 
 ### Example: Trivial fix ends up messy
 
+<div id="text"></div>
+<script>
+document.getElementById("text").innerHTML = "Replace this with asciinema script next";
+</script>
+
 ### Example: Avoiding the messiness
 
 ### Example: Another way to avoid the messiness
@@ -49,6 +53,4 @@ One excerpt from Linus explains why I always rebase locally:
 
 [![asciicast](https://asciinema.org/a/206227.png)](https://asciinema.org/a/206227)
 
-<script>
-document.getElementById("text").innerHTML = "Text added by JavaScript code";
-</script>
+
