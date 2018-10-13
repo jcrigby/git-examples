@@ -36,10 +36,7 @@ One excerpt from Linus explains why I always rebase locally:
 
 ### Example: Trivial fix ends up messy
 
-<div id="text"></div>
-<script>
-document.getElementById("text").innerHTML = "Replace this with asciinema script next";
-</script>
+<script src="https://asciinema.org/a/206227.js" id="asciicast-206227" async></script>
 
 ### Example: Avoiding the messiness
 
