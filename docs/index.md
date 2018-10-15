@@ -1,11 +1,24 @@
 This page has some explanation of various git concepts and links to some asciinema asciicast demonstrations.
 
-## Prereqs: You should be familiar with the basics
+## Prerequisites: You should be familiar with the basics
+
+The git documentation has a basic [tutorial](https://git-scm.com/docs/gittutorial).
+It contains the same info as what you get from man gittutorial if you have
+the git man pages installed.
 
 This [Visual GIT Guide](https://marklodato.github.io/visual-git-guide/index-en.html)
-is only one of 1.5 bajillion places to start.
+may be useful if you are a visual thinker.
 
-## Philosopy: Merge vs Rebase
+This [git cheat sheet](http://ndpsoftware.com/git-cheatsheet.html) is a great guide
+to how different commands affect your working directory, index, local repository,
+remote repository and stash.
+
+The above cheat sheet has a link to a
+[flow chart](http://justinhileman.info/article/git-pretty/git-pretty.png)
+that guides you out of any git mess you find yourself in.
+
+
+## Philosophy: Merge vs Rebase
 
 Let's go back to ancient history (2009) and checkout some advice from Linus
 Torvalds that is still relevant today.
@@ -28,23 +41,27 @@ One excerpt from Linus explains why I always rebase locally:
 > Keep your own history readable,
 >
 > Some people do this by just working things out in their head first, and 
-> not making mistakes. but that's very rare, and for the rest of us, we 
+> not making mistakes. But, that's very rare, and for the rest of us, we 
 > use "git rebase" etc while we work on our problems. 
 
 > So "git rebase" is not wrong. But it's right only if it's YOUR VERY OWN 
 > PRIVATE git tree.
 
-### Example: Trivial fix ends up messy
+## Examples: How rebase can help you clean up your history
+
+Assuming you have some pride an
+
+### Trivial fix ends up messy
 
 <script src="https://asciinema.org/a/206227.js" id="asciicast-206227" async></script>
 
-### Example: Avoiding the messiness
+### Avoiding the messiness
 
-### Example: Another way to avoid the messiness
+### Another way to avoid the messiness
 
-### Example: Fixing up the messiness after the fact
+### Fixing up the messiness after the fact
 
-### Example: An unconventional workflow
+### An unconventional workflow
 
 ## Conflict resolution
 
