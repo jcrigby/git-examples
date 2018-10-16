@@ -51,9 +51,14 @@ One excerpt from Linus explains why I always rebase locally:
 
 Assuming you have some pride an
 
-### Trivial fix ends up messy
+### Pathological Merge
 
-<script src="https://asciinema.org/a/206227.js" id="asciicast-206227" async></script>
+In this contrived example a developer tries to push a trivial change but the
+upstream keeps getting changed after he pulls but before he pushes.
+On each failure he pulls again which results in a merge commit.
+Eventually he succeeds, however, the log is a mess.
+
+<script src="https://asciinema.org/a/206852.js" id="asciicast-206852" async></script>
 
 ### Avoiding the messiness
 

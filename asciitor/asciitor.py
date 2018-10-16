@@ -34,9 +34,10 @@ class asciitor:
         self.pane.send_keys(keys)
 
     def prep(self):
-        self.pane.send_keys('asciinema rec -i 2 -c "/bin/bash"')
+        self.pane.send_keys('asciinema rec -i 4 -c "/bin/bash"')
         time.sleep(1)
         self.pane.send_keys('export PS1="{}"'.format(self.prompt))
+        self.pane.send_keys('export LESS="-M -I -R -S"')
 
 def gitbare():
     dirpath = tmpdir()
