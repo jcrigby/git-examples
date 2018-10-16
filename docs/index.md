@@ -49,18 +49,23 @@ One excerpt from Linus explains why I always rebase locally:
 
 ## Examples: How rebase can help you clean up your history
 
-Assuming you have some pride an
-
 ### Pathological Merge
 
 In this contrived example a developer tries to push a trivial change but the
-upstream keeps getting changed after he pulls but before he pushes.
-On each failure he pulls again which results in a merge commit.
-Eventually he succeeds, however, the log is a mess.
+upstream keeps changing out from under him.
+On each failure he pulls again with `git pull` which results in a merge commit.
+Eventually he succeeds; however, the log is a mess.
 
 <script src="https://asciinema.org/a/206852.js" id="asciicast-206852" async></script>
 
 ### Avoiding the messiness
+
+In this example everything is the same as above except we add the `--rebase`
+option to the `git pull` command.
+The same number of attempts at pushing are required; however, the resulting
+history is much cleaner.
+
+<script src="https://asciinema.org/a/206860.js" id="asciicast-206860" async></script>
 
 ### Another way to avoid the messiness
 
