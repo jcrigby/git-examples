@@ -39,7 +39,8 @@ pske('git commit -m "added file1.txt"')
 pske('git push origin HEAD:master')
 
 sske('git remote update')
-sske('git checkout master')
+sske('git checkout master; speechbubble 5 90 "checked out master"')
+time.sleep(5)
 
 sske('echo foo > file2.txt')
 sske('git add file2.txt')
@@ -51,6 +52,8 @@ pske('git commit -m "appended to file1.txt"')
 pske('git push origin HEAD:master')
 
 sske('git push')
+sske('speechbubble 5 80 "push failed\nrebase and try again"')
+time.sleep(5)
 sske('git pull --rebase')
 
 def ppush():
@@ -61,8 +64,9 @@ def ppush():
 
 def sfail():
     sske('git push')
+    sske('speechbubble 5 80 "push failed\nrebase and try again"')
+    time.sleep(5)
     sske('git pull --rebase')
-    time.sleep(2)
 
 ppush()
 sfail()

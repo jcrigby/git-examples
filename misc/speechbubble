@@ -1,0 +1,65 @@
+#!/usr/bin/python3.6
+import sys
+from subprocess import check_call, Popen, PIPE, STDOUT
+import time
+
+row = int(sys.argv[1])
+col = int(sys.argv[2])
+msg = sys.argv[3]
+
+def bubble(text):
+    max_len = max([len(x) for x in text.split("\n")])
+    bubble_txt = "╭─" + "─" * max_len + "─╮\n"
+    for line in text.split("\n"):
+        bubble_txt += "│ " + line + " │\n"
+    bubble_txt += "╰─" + "─" * max_len + "─╯\n"
+    return bubble_txt
+
+def sh_call(cmd):
+    check_call(cmd, shell=True)
+
+def sh_pipe_read(cmd):
+    p = Popen(cmd, shell=True, stdin=PIPE, stdout=PIPE)
+    output = p.stdout.read()
+    p.wait()
+    return output
+
+def sh_pipe_write(cmd, input):
+    p = Popen(cmd, shell=True, stdin=PIPE, stdout=STDOUT)
+    p.stdin.write(input)
+    p.stdin.close()
+    p.wait()
+
+def goto(row, col):
+    sh_call("tput cup {} {}".format(row, col))
+
+def redtext():
+    sh_call("tput setaf 160")
+
+def normaltext():
+    sh_call("tput setaf 0")
+
+def goalt():
+    sh_call("tput smcup")
+
+def gonorm():
+    sh_call("tput rmcup")
+
+bubbletext = bubble(msg)
+
+sh_call("tmux capture-pane -p -e > /tmp/contents.txt")
+goalt();
+sh_call("head -n-1 /tmp/contents.txt")
+
+redtext()
+for bubble_line in bubbletext.split("\n"):
+    goto(row, col)
+    row += 1
+    print(bubble_line)
+
+goto(999, 0)
+time.sleep(1.5)
+normaltext()
+gonorm()
+
+goto(999, 0)
