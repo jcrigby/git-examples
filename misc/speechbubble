@@ -34,10 +34,10 @@ def goto(row, col):
     sh_call("tput cup {} {}".format(row, col))
 
 def redtext():
-    sh_call("tput setaf 160")
+    sh_call("tput setaf 1;tput bold")
 
 def normaltext():
-    sh_call("tput setaf 0")
+    sh_call("tput sgr0")
 
 def goalt():
     sh_call("tput smcup")
@@ -56,10 +56,9 @@ for bubble_line in bubbletext.split("\n"):
     goto(row, col)
     row += 1
     print(bubble_line)
-
-goto(999, 0)
-time.sleep(1.5)
 normaltext()
-gonorm()
+goto(999, 0)
+time.sleep(5)
 
+gonorm()
 goto(999, 0)
