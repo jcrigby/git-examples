@@ -52,7 +52,7 @@ pske('git commit -m "appended to file1.txt"')
 pske('git push origin HEAD:master')
 
 sske('git push')
-sske('speechbubble 5 80 "push failed\nrebase and try again"')
+sske('speechbubble 5 80 "push failed          \nrebase and try again "')
 time.sleep(5)
 sske('git pull --rebase')
 
@@ -64,7 +64,7 @@ def ppush():
 
 def sfail():
     sske('git push')
-    sske('speechbubble 5 80 "push failed\nrebase and try again"')
+    sske('speechbubble 5 80 "push failed again\nrebase and try again "')
     time.sleep(5)
     sske('git pull --rebase')
 
@@ -77,17 +77,10 @@ sfail()
 
 # finally succeed
 sske('git push')
+#sske('speechbubble 5 80 "push succeeded!"')
 sske('git lg3')
 ssk(' ')
-time.sleep(2)
-ssk(' ')
-time.sleep(2)
-ssk(' ')
-time.sleep(2)
-ssk(' ')
-time.sleep(2)
-ssk(' ')
-time.sleep(2)
+#sske('speechbubble 5 80 "history is linear                \njust one commit to add our change!"')
 ssk('q')
 time.sleep(0.5)
 ssk('C-d')

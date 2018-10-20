@@ -1,64 +1,81 @@
 #!/usr/bin/python3.6
 import sys
-from subprocess import check_call, Popen, PIPE, STDOUT
+from subprocess import check_call, check_output
 import time
-
-row = int(sys.argv[1])
-col = int(sys.argv[2])
-msg = sys.argv[3]
-
-def bubble(text):
-    max_len = max([len(x) for x in text.split("\n")])
-    bubble_txt = "╭─" + "─" * max_len + "─╮\n"
-    for line in text.split("\n"):
-        bubble_txt += "│ " + line + " │\n"
-    bubble_txt += "╰─" + "─" * max_len + "─╯\n"
-    return bubble_txt
 
 def sh_call(cmd):
     check_call(cmd, shell=True)
 
-def sh_pipe_read(cmd):
-    p = Popen(cmd, shell=True, stdin=PIPE, stdout=PIPE)
-    output = p.stdout.read()
-    p.wait()
-    return output
-
-def sh_pipe_write(cmd, input):
-    p = Popen(cmd, shell=True, stdin=PIPE, stdout=STDOUT)
-    p.stdin.write(input)
-    p.stdin.close()
-    p.wait()
+def sh_get(cmd):
+    return check_output(cmd, shell=True)
 
 def goto(row, col):
     sh_call("tput cup {} {}".format(row, col))
 
-def redtext():
+def red_bold_text():
     sh_call("tput setaf 1;tput bold")
 
-def normaltext():
+def normal_text():
     sh_call("tput sgr0")
 
-def goalt():
-    sh_call("tput smcup")
-
-def gonorm():
+def leave_alt_screen():
     sh_call("tput rmcup")
 
-bubbletext = bubble(msg)
+def enter_alt_screen():
+    sh_call("tmux capture-pane -p -e > /tmp/contents.text")
+    sh_call("tput smcup")
+    sh_call("head -n-1 /tmp/contents.text")
 
-sh_call("tmux capture-pane -p -e > /tmp/contents.txt")
-goalt();
-sh_call("head -n-1 /tmp/contents.txt")
+def lower_left_corner():
+    goto(999, 0)
 
-redtext()
-for bubble_line in bubbletext.split("\n"):
-    goto(row, col)
-    row += 1
-    print(bubble_line)
-normaltext()
-goto(999, 0)
-time.sleep(5)
+def bubble_text(text):
+    max_len = max([len(x) for x in text.split("\n")])
+    bubble_text = "╭─" + "─" * max_len + "─╮\n"
+    rows = 3
+    cols = max_len + 7
+    for line in text.split("\n"):
+        line += " " * (max_len - len(line))
+        bubble_text += "│ " + line + " │\n"
+        rows += 1
+    bubble_text += "╰─" + "─" * max_len + "─╯\n"
+    return (bubble_text, rows, cols)
 
-gonorm()
-goto(999, 0)
+def print_bubble(msg, row, col, delay):
+    enter_alt_screen() 
+    red_bold_text()
+
+    btext, height, width = bubble_text(msg)
+
+    # negative rows and cols are relative
+    # to bottom and right edge respectively
+    if row < 0:
+        row = -row
+        screen_rows = int(sh_get("tput lines"))
+        row = screen_rows - height -row
+    if col < 0:
+        cols = -col
+        screen_cols = int(sh_get("tput cols"))
+        col = screen_cols - width -col
+
+    for bubble_line in btext.split("\n"):
+        goto(row, col)
+        row += 1
+        print(bubble_line)
+
+    normal_text()
+    lower_left_corner()
+    time.sleep(delay)
+    leave_alt_screen()
+    # back in normal screen
+    lower_left_corner()
+
+row = int(sys.argv[1])
+col = int(sys.argv[2])
+
+msg = sys.argv[3]
+
+delay = 5
+if len(sys.argv) > 4:
+    delay = float(sys.argv[4])
+print_bubble(msg, row, col, delay)

@@ -38,6 +38,8 @@ class asciitor:
         time.sleep(1)
         self.pane.send_keys('export PS1="{}"'.format(self.prompt))
         self.pane.send_keys('export LESS="-M -I -R -S"')
+        for i in range(40):
+            self.pane.enter()
 
 def gitbare():
     dirpath = tmpdir()
