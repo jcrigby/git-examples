@@ -6,6 +6,11 @@ The git documentation has a basic [tutorial](https://git-scm.com/docs/gittutoria
 It contains the same info as what you get from man gittutorial if you have
 the git man pages installed.
 
+The git documentation also has the complete [ProGit book](https://git-scm.com/book/en/v2).
+It does a better job of explaining everything here, so why are you here anyway?.
+
+Don't forget the manpages, either on your local machine or [online](https://git-scm.com/docs).
+
 This [Visual GIT Guide](https://marklodato.github.io/visual-git-guide/index-en.html)
 may be useful if you are a visual thinker.
 
