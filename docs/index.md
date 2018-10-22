@@ -22,6 +22,8 @@ The above cheat sheet has a link to a
 [flow chart](http://justinhileman.info/article/git-pretty/git-pretty.png)
 that guides you out of any git mess you find yourself in.
 
+## Basics: Git log can show more than a straight history
+
 
 ## Philosophy: Merge vs Rebase
 
