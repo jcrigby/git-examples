@@ -18,12 +18,13 @@ def red_bold_text():
 def normal_text():
     sh_call("tput sgr0")
 
-def leave_alt_screen():
-    sh_call("tput rmcup")
-
 def enter_alt_screen():
     sh_call("tmux capture-pane -p -e > /tmp/contents.text")
-    sh_call("tput smcup")
+    #sh_call("tput smcup")
+
+def leave_alt_screen():
+    #sh_call("tput rmcup")
+    sh_call("clear")
     sh_call("head -n-1 /tmp/contents.text")
 
 def lower_left_corner():
