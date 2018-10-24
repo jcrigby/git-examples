@@ -34,7 +34,9 @@ class asciitor:
         self.pane.send_keys(keys)
 
     def prep(self):
-        self.pane.send_keys('asciinema rec -i 4 -c "/bin/bash"')
+        if self.cast_name is None:
+            self.cast_name = 'cast'
+        self.pane.send_keys('asciinema rec -i 4 -c "/bin/bash" /tmp/{}$$.asc'.format(self.cast_name))
         time.sleep(1)
         self.pane.send_keys('export PS1="{}"'.format(self.prompt))
         self.pane.send_keys('export LESS="-M -I -R -S"')
@@ -62,6 +64,7 @@ class gittor(asciitor):
         super(gittor, self).__init__(*args, **kwargs)
         self.user_email = kwargs.get('user_email', 'joe.king@yoyodyne.com')
         self.user_name = kwargs.get('user_name', 'Joe King')
+        self.cast_name = self.user_name.replace(' ', '').lower()
         self.remotename = kwargs.get('remotename', None)
         if self.remotename is None:
             self.remote = gitbare()
