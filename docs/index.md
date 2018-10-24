@@ -22,8 +22,65 @@ The above cheat sheet has a link to a
 [flow chart](http://justinhileman.info/article/git-pretty/git-pretty.png)
 that guides you out of any git mess you find yourself in.
 
-## Basics: Git log can show more than a straight history
+## Basics: Viewing history
 
+### There is more to git log than you may think
+
+Like nearly all git commands, git log has many options.
+You probably already know about some of the standards,
+with no option you get a basic log.
+With `-p` your get diff output.
+The `--stat` option gives you diffstat info.
+An option that you may not have ever heard of is the `-g` for graphical
+or at least as graphical as terminal output can be.
+
+Adding lines like these to your .gitconfig give you three flavours or graphical
+git log.
+
+```
+[alias]
+    lg = !"git lg1"
+    lg1 = !"git lg1-specific --all"
+    lg2 = !"git lg2-specific --all"
+    lg3 = !"git lg3-specific --all"
+
+    lg1-specific = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)'
+    lg2-specific = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)'
+    lg3-specific = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset) %C(bold cyan)(committed: %cD)%C(reset) %C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset)%n''          %C(dim white)- %an <%ae> %C(reset) %C(dim white)(committer: %cn <%ce>)%C(reset)'
+```
+
+The `git lg3` version is demonstrated here:
+
+<script src="https://asciinema.org/a/208167.js" id="asciicast-208167" async></script>
+
+### Gitk is the one gui tool even command line folks should be using
+
+As useful as graphical git log can be, you will probably still prefer gitk.
+It is written in ancient tcl/tk but is a pretty good tool for seeing git logs
+and branching.
+
+If takes a branch name as an argument, if you are lazy try --a -a, one of these means all branches
+and I have no idea what the other means.
+If you are inspecting a repo that has been around for a long time and you don't want gitk to spend
+forever sucking in old history then use the `--since` option.
+
+```
+gitk -a --all --since='1 month'
+gitk -a --all --since=1.month
+```
+
+The second version means the same thing and is much easier to type.
+
+There is an appendix to the online git doc that says a bit about
+[gitk](https://git-scm.com/book/en/v2/Appendix-A:-Git-in-Other-Environments-Graphical-Interfaces).
+Another command git-gui is mentioned, I have accidently stumbled into git-gui a few times
+and was as confused as a non-vi user is when she accidently types `vi`.
+
+### Bitbucket sucks
+
+Our bitbucket instance teases at having branch visualization but then does a
+bait and switch and tells you that you need to pay for the supposedly Awesome
+Graphs plugin.
 
 ## Philosophy: Merge vs Rebase
 
@@ -74,14 +131,11 @@ history is much cleaner.
 
 <script src="https://asciinema.org/a/208158.js" id="asciicast-208158" async></script>
 
-### Another way to avoid the messiness
+#### tl;dr
 
-### Fixing up the messiness after the fact
-
-### An unconventional workflow
-
-## Conflict resolution
-
-[![asciicast](https://asciinema.org/a/206227.png)](https://asciinema.org/a/206227)
-
+Adding `--rebase` to your `git pull` can make your resulting history less ugly.
+However, all the problems or rebase apply so only do this if you know what you are doing.
+If you only have your own changes locally and you are simply syncing with upstream
+then you are probably ok.
+If you have pulled other changes into your repo then you definitely do not want to rebase.
 
