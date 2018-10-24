@@ -56,7 +56,7 @@ pske('git commit -m "appended to file1.txt"')
 pske('git push origin HEAD:master')
 
 sske('git push')
-sb("push failed\nrebase and try again ")
+sb("push failed\ngit pull --rebase and try again ")
 time.sleep(5)
 sske('git pull --rebase')
 
@@ -68,8 +68,7 @@ def ppush():
 
 def sfail():
     sske('git push')
-    sske('speechbubble 1 -1 "push failed again\nrebase and try again "')
-    sb("push failed again\nrebase and try again ")
+    sb("push failed again\ngit pull --rebase and try again ")
     time.sleep(5)
     sske('git pull --rebase')
 
