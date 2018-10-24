@@ -57,8 +57,8 @@ pske('git push origin HEAD:master')
 
 sske('git push')
 sb("push failed\ngit pull and try again ")
-time.sleep(5)
 sske('git pull')
+time.sleep(5)
 sske(':wq')
 
 def ppush():
@@ -70,8 +70,8 @@ def ppush():
 def sfail():
     sske('git push')
     sb("push failed again\ngit pull and try again ")
-    time.sleep(3)
     sske('git pull')
+    time.sleep(5)
     sske(':wq')
 
 ppush()
