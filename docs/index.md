@@ -80,7 +80,13 @@ gitk -a --all --since=1.jan
 There is an appendix to the online git doc that says a bit about
 [gitk](https://git-scm.com/book/en/v2/Appendix-A:-Git-in-Other-Environments-Graphical-Interfaces).
 Another command git-gui is mentioned, I have accidently stumbled into git-gui a few times
-and was as confused as a non-vi user is when she accidently types `vi`.
+and was as confused as non-vi user is when they accidently type `vi`.
+
+If you are an old school X11 user and use "select to copy, middle mouse to paste" then
+you need to know that when you click on a commit in gitk the value in the box
+labeled __SHA1 ID__ gets updated to that commits sha1 and it gets
+copied to the middle mouse paste buffer, so you can left click on a commit in gitk
+then middle mouse to paste elsewhere.
 
 ### Bitbucket sucks
 
