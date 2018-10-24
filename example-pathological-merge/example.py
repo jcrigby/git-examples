@@ -32,6 +32,10 @@ def ssk(keys):
     spongebob.send_keys(keys, enter=False, suppress_history=False)
     time.sleep(1)
 
+def sb(msg):
+    with open("/tmp/sbtext", "w") as f:
+        f.write(msg)
+    sske('ssbb')
 
 pske('echo foo > file1.txt')
 pske('git add file1.txt')
@@ -40,6 +44,7 @@ pske('git push origin HEAD:master')
 
 sske('git remote update')
 sske('git checkout master')
+time.sleep(5)
 
 sske('echo foo > file2.txt')
 sske('git add file2.txt')
@@ -51,6 +56,8 @@ pske('git commit -m "appended to file1.txt"')
 pske('git push origin HEAD:master')
 
 sske('git push')
+sb("push failed\ngit pull and try again ")
+time.sleep(5)
 sske('git pull')
 sske(':wq')
 
@@ -62,8 +69,9 @@ def ppush():
 
 def sfail():
     sske('git push')
-    sske('git pull')
+    sb("push failed again\ngit pull and try again ")
     time.sleep(3)
+    sske('git pull')
     sske(':wq')
 
 ppush()
@@ -75,21 +83,14 @@ sfail()
 
 # finally succeed
 sske('git push')
+sb("push succeeded!")
 sske('git lg3')
-ssk(' ')
-time.sleep(2)
-ssk(' ')
-time.sleep(2)
-ssk(' ')
-time.sleep(2)
-ssk(' ')
-time.sleep(2)
-ssk(' ')
-time.sleep(2)
-ssk('q')
-time.sleep(0.5)
-ssk('C-d')
-sske('')
+#ssk(' ')
+#sske('speechbubble 5 80 "history is linear                \njust one commit to add our change!"')
+#ssk('q')
+#time.sleep(0.5)
+#ssk('C-d')
+#sske('')
 
 
 

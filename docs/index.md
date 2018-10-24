@@ -63,7 +63,7 @@ upstream keeps changing out from under him.
 On each failure he pulls again with `git pull` which results in a merge commit.
 Eventually he succeeds; however, the log is a mess.
 
-<script src="https://asciinema.org/a/206852.js" id="asciicast-206852" async></script>
+<script src="https://asciinema.org/a/208159.js" id="asciicast-208159" async></script>
 
 ### Avoiding the messiness
 
