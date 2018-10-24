@@ -72,7 +72,7 @@ option to the `git pull` command.
 The same number of attempts at pushing are required; however, the resulting
 history is much cleaner.
 
-<script src="https://asciinema.org/a/208157.js" id="asciicast-208157" async></script>
+<script src="https://asciinema.org/a/208158.js" id="asciicast-208158" async></script>
 
 ### Another way to avoid the messiness
 
