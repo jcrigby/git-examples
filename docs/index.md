@@ -270,10 +270,11 @@ repo to do a pull request.
 All the changes are local and nothing has been pushed anywhere so you
 are safe rebasing. Time to learn `git rebase -i`.
 
-Here is a simple example where we have three files.
-Over the course of several commits we modify the files but in an erratic way.
-Our hubris prevents us from pushing the changes as is, we really want to 
-clean up first so it looks like we got it right the first time.
+This is a simple example of adding and modifying two files over several
+commits.
+We would like to consolidate some of those commits, and reword one.
+
+<script src="https://asciinema.org/a/208270.js" id="asciicast-208270" async></script>
 
 ## Hard Questions: So is there a problem with combining merging and rebasing?
 
