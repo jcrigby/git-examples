@@ -22,7 +22,7 @@ The above cheat sheet has a link to a
 [flow chart](http://justinhileman.info/article/git-pretty/git-pretty.png)
 that guides you out of any git mess you find yourself in.
 
-## Basics: Viewing history
+## Practical Basics: Viewing history
 
 ### There is more to git log than you may think
 
@@ -84,7 +84,7 @@ and was as confused as non-vi user is when they accidently type `vi`.
 
 If you are an old school X11 user and use "select to copy, middle mouse to paste" then
 you need to know that when you click on a commit in gitk the value in the box
-labeled __SHA1 ID__ gets updated to that commits sha1 and it gets
+labeled __SHA1 ID__ gets updated to that commit's sha1 and it gets
 copied to the middle mouse paste buffer, so you can left click on a commit in gitk
 then middle mouse to paste elsewhere.
 
@@ -94,12 +94,115 @@ Our bitbucket instance teases at having branch visualization but then does a
 bait and switch and tells you that you need to pay for the supposedly Awesome
 Graphs plugin.
 
-## More Basics: Copying a local repo
+## More Practical Basics
+
+### Copying a local repo
 
 Let's say you have a repo checked out for use with a distro builder like
 yocto and you want to checkout the same repo for doing local kernel
 builds. You will be making changes but none that you want to push upstream
 so you really want everything local.
+
+#### Clone an existing repo into an empty directory
+
+```
+mkdir -p /tmp/path/to/new/repo
+cd /tmp/path/to/new/repo
+git clone ~/work/disasters/git-class/git-examples
+cd git-examples
+git remote -v
+origin  /home/jcrigby/work/disasters/git-class/git-examples/ (fetch)
+origin  /home/jcrigby/work/disasters/git-class/git-examples/ (push)
+git branch -a
+* master
+  remotes/origin/HEAD -> origin/master
+  remotes/origin/master
+  remotes/origin/noaltscreeen
+  remotes/origin/noaltscreen
+```
+
+#### Add a existing repo to a different existing repo
+```
+cd /tmp/path/existing/
+git init
+Initialized empty Git repository in /tmp/path/existing/.git/
+git remote add my-other-repo /home/jcrigby/work/disasters/git-class/
+ng$ (master) git remote add my-other-repo /home/jcrigby/work/disasters/git-class/git-examples/.git
+git remote update
+Fetching my-other-repo
+remote: Counting objects: 167, done.
+remote: Compressing objects: 100% (115/115), done.
+remote: Total 167 (delta 65), reused 79 (delta 27)
+Receiving objects: 100% (167/167), 88.00 KiB | 7.33 MiB/s, done.
+Resolving deltas: 100% (65/65), done.
+From /home/jcrigby/work/disasters/git-class/git-examples/
+ * [new branch]      master       -> my-other-repo/master
+ * [new branch]      noaltscreeen -> my-other-repo/noaltscreeen
+ * [new branch]      noaltscreen  -> my-other-repo/noaltscreen
+git branch -a
+  remotes/my-other-repo/master
+  remotes/my-other-repo/noaltscreeen
+  remotes/my-other-repo/noaltscreen
+git reset --hard my-other-repo/master
+```
+
+#### Pushing back to a local remote
+
+If you want to push back to the original local repo you will get an error if
+pushing to the current checked out branch:
+```
+echo foo > foofile
+git add foofile
+git commit -m 'added foofile'
+[master ac043ce] added foofile
+ 1 file changed, 1 insertion(+)
+ create mode 100644 foofile
+jcrigby@Hoid:/tmp/path/existing$ (master) git push my-other-repo HEAD:master
+Counting objects: 3, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 280 bytes | 280.00 KiB/s, done.
+Total 3 (delta 1), reused 0 (delta 0)
+remote: error: refusing to update checked out branch: refs/heads/master
+remote: error: By default, updating the current branch in a non-bare repository
+remote: is denied, because it will make the index and work tree inconsistent
+remote: with what you pushed, and will require 'git reset --hard' to match
+remote: the work tree to HEAD.
+remote:
+remote: You can set the 'receive.denyCurrentBranch' configuration variable
+remote: to 'ignore' or 'warn' in the remote repository to allow pushing into
+remote: its current branch; however, this is not recommended unless you
+remote: arranged to update its work tree to match what you pushed in some
+remote: other way.
+remote:
+remote: To squelch this message and still keep the default behaviour, set
+remote: 'receive.denyCurrentBranch' configuration variable to 'refuse'.
+To /home/jcrigby/work/disasters/git-class/git-examples/.git
+ ! [remote rejected] HEAD -> master (branch is currently checked out)
+error: failed to push some refs to '/home/jcrigby/work/disasters/git-class/git-examples/.git'
+```
+Create a different branch so we are not trying to push to master which is
+the current checked out branch on the other end.
+```
+git checkout -b mypushablebranch
+Switched to a new branch 'mypushablebranch'
+git push my-other-repo HEAD:mypushablebranch
+Counting objects: 3, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 280 bytes | 280.00 KiB/s, done.
+Total 3 (delta 1), reused 0 (delta 0)
+To /home/jcrigby/work/disasters/git-class/git-examples/.git
+ * [new branch]      HEAD -> mypushablebranch
+```
+Now back at the original we can see the branch we just pushed.
+```
+git branch -v
+* master           4d864bd update about gitk sha1 magic copy paste
+  mypushablebranch ac043ce added foofile
+  noaltscreeen     d8801ae fix speechbubble to not use alt screen
+  noaltscreen      d8801ae fix speechbubble to not use alt screen
+```
 
 ## Philosophy: Merge vs Rebase
 
