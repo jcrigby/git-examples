@@ -34,8 +34,8 @@ The `--stat` option gives you diffstat info.
 An option that you may not have ever heard of is the `-g` for graphical
 or at least as graphical as terminal output can be.
 
-Adding lines like these to your .gitconfig give you three flavours or graphical
-git log.
+Adding lines like these to your .gitconfig will give you three flavours of
+graphical git log.
 
 ```
 [alias]
@@ -59,17 +59,23 @@ As useful as graphical git log can be, you will probably still prefer gitk.
 It is written in ancient tcl/tk but is a pretty good tool for seeing git logs
 and branching.
 
-If takes a branch name as an argument, if you are lazy try --a -a, one of these means all branches
+![gitk](gitk.png)
+
+It takes a branch name as an argument, if you are lazy try `--a -a`, one of these means all branches
 and I have no idea what the other means.
-If you are inspecting a repo that has been around for a long time and you don't want gitk to spend
-forever sucking in old history then use the `--since` option.
+If you are inspecting a repo that has been around for a long time and you don't want `gitk` to spend
+forever sucking in old history then use the `--since` option, it takes lots of sorta english
+descriptions of dates.
 
 ```
 gitk -a --all --since='1 month'
-gitk -a --all --since=1.month
+gitk -a --all --since='1 jan'
 ```
-
-The second version means the same thing and is much easier to type.
+The quotes can be omitted if periods are used instead of spaces in the date string. 
+```
+gitk -a --all --since=1.month
+gitk -a --all --since=1.jan
+```
 
 There is an appendix to the online git doc that says a bit about
 [gitk](https://git-scm.com/book/en/v2/Appendix-A:-Git-in-Other-Environments-Graphical-Interfaces).
@@ -81,6 +87,13 @@ and was as confused as a non-vi user is when she accidently types `vi`.
 Our bitbucket instance teases at having branch visualization but then does a
 bait and switch and tells you that you need to pay for the supposedly Awesome
 Graphs plugin.
+
+## More Basics: Copying a local repo
+
+Let's say you have a repo checked out for use with a distro builder like
+yocto and you want to checkout the same repo for doing local kernel
+builds. You will be making changes but none that you want to push upstream
+so you really want everything local.
 
 ## Philosophy: Merge vs Rebase
 
@@ -134,8 +147,38 @@ history is much cleaner.
 #### tl;dr
 
 Adding `--rebase` to your `git pull` can make your resulting history less ugly.
-However, all the problems or rebase apply so only do this if you know what you are doing.
+However, all the problems of rebase apply so only do this if you know what you are doing.
 If you only have your own changes locally and you are simply syncing with upstream
 then you are probably ok.
-If you have pulled other changes into your repo then you definitely do not want to rebase.
+If you have pulled other changes into your repo then you definitely do not want
+to rebase because in the process you could easily rewrite someone else's history.
 
+### Cleaning up before pulling or pushing
+
+You have local edits that were done in a haphazard way and you want to 
+consolidate them before pulling in the latest upstream or pushing to a
+repo to do a pull request.
+All the changes are local and nothing has been pushed anywhere so you
+are safe rebasing. Time to learn `git rebase -i`.
+
+Here is a simple example where we have three files.
+Over the course of several commits we modify the files but in an erratic way.
+Our hubris prevents us from pushing the changes as is, we really want to 
+clean up first so it looks like we got it right the first time.
+
+## Hard Questions: So is there a problem with combining merging and rebasing?
+
+Merging is just creating a new commit with two parents instead of one and then
+checking for conflicts.
+The search for conflicts is done be doing a diff to a common ancestor and making
+sure the two commits being merged don't both change a file with respect
+to the ancestor in a conflicting way.
+
+Rebasing is just automated cherry picking of a series of commits.
+
+There is nothing inherently dangerous about mixing these two other than
+the rebase issues already mentioned.
+
+### But what about the thing that happend?
+
+Let's recreate a similar scenario to answer this one.
