@@ -71,7 +71,9 @@ descriptions of dates.
 gitk -a --all --since='1 month'
 gitk -a --all --since='1 jan'
 ```
+
 The quotes can be omitted if periods are used instead of spaces in the date string. 
+
 ```
 gitk -a --all --since=1.month
 gitk -a --all --since=1.jan
@@ -94,7 +96,7 @@ Our bitbucket instance teases at having branch visualization but then does a
 bait and switch and tells you that you need to pay for the supposedly Awesome
 Graphs plugin.
 
-## More Practical Basics
+## Things asked at least once
 
 ### Copying a local repo
 
@@ -122,6 +124,7 @@ git branch -a
 ```
 
 #### Add a existing repo to a different existing repo
+
 ```
 cd /tmp/path/existing/
 git init
@@ -181,8 +184,10 @@ To /home/jcrigby/work/disasters/git-class/git-examples/.git
  ! [remote rejected] HEAD -> master (branch is currently checked out)
 error: failed to push some refs to '/home/jcrigby/work/disasters/git-class/git-examples/.git'
 ```
+
 Create a different branch so we are not trying to push to master which is
 the current checked out branch on the other end.
+
 ```
 git checkout -b mypushablebranch
 Switched to a new branch 'mypushablebranch'
@@ -195,7 +200,9 @@ Total 3 (delta 1), reused 0 (delta 0)
 To /home/jcrigby/work/disasters/git-class/git-examples/.git
  * [new branch]      HEAD -> mypushablebranch
 ```
+
 Now back at the original we can see the branch we just pushed.
+
 ```
 git branch -v
 * master           4d864bd update about gitk sha1 magic copy paste
@@ -204,7 +211,31 @@ git branch -v
   noaltscreen      d8801ae fix speechbubble to not use alt screen
 ```
 
-## Philosophy: Merge vs Rebase
+### Dealing with conflicts
+
+Epic fail, nothing here yet.
+
+### Trivial local only cleaning up with git rebase -i
+
+You have local edits that were done in a haphazard way and you want to 
+consolidate them before pulling in the latest upstream or pushing to a
+repo to do a pull request.
+All the changes are local and nothing has been pushed anywhere so you
+are safe rebasing. Time to learn `git rebase -i`.
+
+This is a simple example of adding and modifying two files over several
+commits.
+We would like to consolidate some of those commits, and reword one.
+
+<script src="https://asciinema.org/a/208270.js" id="asciicast-208270" async></script>
+
+## Advanced Philosophy: Merge vs Rebase
+
+### tl;dr
+Our history is such a mess and our product is not a commit history so don't
+bother with non trivial rebasing
+
+### Only for the curious
 
 Let's go back to ancient history (2009) and checkout some advice from Linus
 Torvalds that is still relevant today.
@@ -253,7 +284,9 @@ history is much cleaner.
 
 <script src="https://asciinema.org/a/208158.js" id="asciicast-208158" async></script>
 
-#### tl;dr
+#### tl;dr 
+
+Wait wasn't there a tl;dr above?
 
 Adding `--rebase` to your `git pull` can make your resulting history less ugly.
 However, all the problems of rebase apply so only do this if you know what you are doing.
@@ -261,20 +294,6 @@ If you only have your own changes locally and you are simply syncing with upstre
 then you are probably ok.
 If you have pulled other changes into your repo then you definitely do not want
 to rebase because in the process you could easily rewrite someone else's history.
-
-### Cleaning up before pulling or pushing
-
-You have local edits that were done in a haphazard way and you want to 
-consolidate them before pulling in the latest upstream or pushing to a
-repo to do a pull request.
-All the changes are local and nothing has been pushed anywhere so you
-are safe rebasing. Time to learn `git rebase -i`.
-
-This is a simple example of adding and modifying two files over several
-commits.
-We would like to consolidate some of those commits, and reword one.
-
-<script src="https://asciinema.org/a/208270.js" id="asciicast-208270" async></script>
 
 ## Hard Questions: So is there a problem with combining merging and rebasing?
 
